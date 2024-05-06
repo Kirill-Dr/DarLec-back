@@ -9,4 +9,8 @@ export class CreateHomeworkDto {
   @IsString()
   @ApiProperty()
   task: string;
+
+  @IsString()
+  @ApiProperty()
+  date: string;
 }

@@ -13,6 +13,10 @@ export class HomeworkModel {
   @Prop({ required: true })
   @ApiProperty()
   task: string;
+
+  @Prop({ required: true })
+  @ApiProperty()
+  date: string;
 }
 
 export const HomeworkSchema = SchemaFactory.createForClass(HomeworkModel);
