@@ -18,7 +18,9 @@ export class LessonController {
   constructor(private readonly lessonService: LessonService) {}
 
   @Post()
-  async createLesson(@Body() createLessonDto: CreateLessonDto) {
+  async createLesson(
+    @Body() createLessonDto: CreateLessonDto,
+  ): Promise<LessonModel> {
     return await this.lessonService.createLesson(createLessonDto);
   }
 
@@ -28,7 +30,9 @@ export class LessonController {
   }
 
   @Delete(':lessonId')
-  async deleteLessonById(@Param('lessonId') lessonId: string): Promise<any> {
+  async deleteLessonById(
+    @Param('lessonId') lessonId: string,
+  ): Promise<LessonModel> {
     return this.lessonService.deleteLessonById(lessonId);
   }
 
@@ -36,7 +40,7 @@ export class LessonController {
   async updateLessonById(
     @Param('lessonId') lessonId: string,
     @Body() updatedLesson: LessonModel,
-  ): Promise<any> {
+  ): Promise<LessonModel> {
     return this.lessonService.updateLessonById(lessonId, updatedLesson);
   }
 }
