@@ -4,6 +4,7 @@ import { getMongoConfig } from './configs/mongo.config';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { LessonModule } from './lesson/lesson.module';
 import { HomeworkModule } from './homework/homework.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { HomeworkModule } from './homework/homework.module';
     ConfigModule.forRoot(),
     LessonModule,
     HomeworkModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
