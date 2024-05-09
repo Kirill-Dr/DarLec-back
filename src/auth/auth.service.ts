@@ -1,9 +1,13 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { UserModel } from './user.model';
 import { Model } from 'mongoose';
 import { JwtService } from '@nestjs/jwt';
-import { AuthDto } from './dto/auth.dto';
+import { RegisterAuthDto } from './dto/register-auth.dto';
 import { compare, genSalt, hash } from 'bcrypt';
 
 @Injectable()
@@ -13,11 +17,14 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async createUser(dto: AuthDto) {
+  async createUser(dto: RegisterAuthDto) {
+    if (dto.password !== dto.confirmPassword) {
+      throw new BadRequestException('Passwords do not match');
+    }
     try {
       const salt = await genSalt(10);
       const newUser = new this.userModel({
-        userLogin: dto.login,
+        userEmail: dto.email,
         passwordHash: await hash(dto.password, salt),
       });
       return newUser.save();
@@ -26,15 +33,15 @@ export class AuthService {
     }
   }
 
-  async findUser(userLogin: string) {
-    return this.userModel.findOne({ userLogin }).exec();
+  async findUser(userEmail: string) {
+    return this.userModel.findOne({ userEmail }).exec();
   }
 
   async validateUser(
-    userLogin: string,
+    userEmail: string,
     password: string,
-  ): Promise<Pick<UserModel, 'userLogin'>> {
-    const user = await this.findUser(userLogin);
+  ): Promise<Pick<UserModel, 'userEmail'>> {
+    const user = await this.findUser(userEmail);
     if (!user) {
       throw new UnauthorizedException('User not found');
     }
@@ -42,7 +49,7 @@ export class AuthService {
     if (!isCorrectPassword) {
       throw new UnauthorizedException('Wrong login or password');
     }
-    return { userLogin: user.userLogin };
+    return { userEmail: user.userEmail };
   }
 
   async login(email: string) {

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { HomeworkModel } from './homework.model';
-import { HydratedDocument, Model } from 'mongoose';
-import { CreateHomeworkDto } from './dto/create-homework.dto';
+import { Model } from 'mongoose';
+import { HomeworkDto } from './dto/homework.dto';
 
 @Injectable()
 export class HomeworkService {
@@ -11,9 +11,7 @@ export class HomeworkService {
     private readonly homeworkModel: Model<HomeworkModel>,
   ) {}
 
-  async createHomework(
-    dto: CreateHomeworkDto,
-  ): Promise<HydratedDocument<HomeworkModel>> {
+  async createHomework(dto: HomeworkDto): Promise<HomeworkDto> {
     try {
       return this.homeworkModel.create(dto);
     } catch (error) {
@@ -21,7 +19,7 @@ export class HomeworkService {
     }
   }
 
-  async findAllHomeworks(): Promise<HydratedDocument<HomeworkModel>[]> {
+  async findAllHomeworks(): Promise<HomeworkDto[]> {
     try {
       return this.homeworkModel.find().exec();
     } catch (error) {
@@ -29,9 +27,7 @@ export class HomeworkService {
     }
   }
 
-  async deleteHomeworkById(
-    homeworkId: string,
-  ): Promise<HydratedDocument<HomeworkModel>> {
+  async deleteHomeworkById(homeworkId: string): Promise<HomeworkDto> {
     try {
       return this.homeworkModel.findByIdAndDelete(homeworkId);
     } catch (error) {
@@ -41,8 +37,8 @@ export class HomeworkService {
 
   async updateHomeworkById(
     homeworkId: string,
-    updatedHomework: HomeworkModel,
-  ): Promise<HydratedDocument<HomeworkModel>> {
+    updatedHomework: HomeworkDto,
+  ): Promise<HomeworkDto> {
     try {
       return this.homeworkModel.findByIdAndUpdate(homeworkId, updatedHomework, {
         new: true,

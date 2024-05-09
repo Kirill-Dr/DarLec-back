@@ -1,7 +1,7 @@
 import { IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateLessonDto {
+export class LessonDto {
   @IsString()
   @ApiProperty()
   day: string;

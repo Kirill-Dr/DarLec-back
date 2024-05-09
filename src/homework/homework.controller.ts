@@ -9,8 +9,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { HomeworkService } from './homework.service';
-import { CreateHomeworkDto } from './dto/create-homework.dto';
-import { HomeworkModel } from './homework.model';
+import { HomeworkDto } from './dto/homework.dto';
 
 @Controller('homework')
 @ApiTags('Homework')
@@ -19,28 +18,28 @@ export class HomeworkController {
 
   @Post()
   async createHomework(
-    @Body() createHomeworkDto: CreateHomeworkDto,
-  ): Promise<HomeworkModel> {
+    @Body() createHomeworkDto: HomeworkDto,
+  ): Promise<HomeworkDto> {
     return this.homeworkService.createHomework(createHomeworkDto);
   }
 
   @Get()
-  async findAllHomeworks(): Promise<HomeworkModel[]> {
+  async findAllHomeworks(): Promise<HomeworkDto[]> {
     return this.homeworkService.findAllHomeworks();
   }
 
   @Delete(':homeworkId')
   async deleteHomeworkById(
     @Param('homeworkId') homeworkId: string,
-  ): Promise<HomeworkModel> {
+  ): Promise<HomeworkDto> {
     return this.homeworkService.deleteHomeworkById(homeworkId);
   }
 
   @Patch(':homeworkId')
   async updateHomeworkById(
     @Param('homeworkId') homeworkId: string,
-    @Body() updatedHomework: HomeworkModel,
-  ): Promise<HomeworkModel> {
+    @Body() updatedHomework: HomeworkDto,
+  ): Promise<HomeworkDto> {
     return this.homeworkService.updateHomeworkById(homeworkId, updatedHomework);
   }
 }

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { LessonModel } from './lesson.model';
-import { HydratedDocument, Model } from 'mongoose';
-import { CreateLessonDto } from './dto/create-lesson.dto';
+import { Model } from 'mongoose';
+import { LessonDto } from './dto/lesson.dto';
 
 @Injectable()
 export class LessonService {
@@ -11,9 +11,7 @@ export class LessonService {
     private readonly lessonModel: Model<LessonModel>,
   ) {}
 
-  async createLesson(
-    dto: CreateLessonDto,
-  ): Promise<HydratedDocument<LessonModel>> {
+  async createLesson(dto: LessonDto): Promise<LessonDto> {
     try {
       return this.lessonModel.create(dto);
     } catch (error) {
@@ -21,7 +19,7 @@ export class LessonService {
     }
   }
 
-  async findAllLessons(): Promise<HydratedDocument<LessonModel>[]> {
+  async findAllLessons(): Promise<LessonDto[]> {
     try {
       return this.lessonModel.find().exec();
     } catch (error) {
@@ -29,9 +27,7 @@ export class LessonService {
     }
   }
 
-  async deleteLessonById(
-    lessonId: string,
-  ): Promise<HydratedDocument<LessonModel>> {
+  async deleteLessonById(lessonId: string): Promise<LessonDto> {
     try {
       return this.lessonModel.findByIdAndDelete(lessonId);
     } catch (error) {
@@ -41,8 +37,8 @@ export class LessonService {
 
   async updateLessonById(
     lessonId: string,
-    updatedLesson: LessonModel,
-  ): Promise<HydratedDocument<LessonModel>> {
+    updatedLesson: LessonDto,
+  ): Promise<LessonDto> {
     try {
       return this.lessonModel.findByIdAndUpdate(lessonId, updatedLesson, {
         new: true,
