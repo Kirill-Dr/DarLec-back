@@ -8,6 +8,10 @@ export class RegisterAuthDto {
 
   @IsString()
   @ApiProperty()
+  username: string;
+
+  @IsString()
+  @ApiProperty()
   password: string;
 
   @IsString()

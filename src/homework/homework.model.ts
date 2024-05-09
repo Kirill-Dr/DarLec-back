@@ -10,9 +10,6 @@ export class HomeworkModel {
 
   @Prop({ required: true })
   task: string;
-
-  @Prop({ required: true })
-  date: string;
 }
 
 export const HomeworkSchema = SchemaFactory.createForClass(HomeworkModel);

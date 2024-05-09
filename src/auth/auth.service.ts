@@ -25,6 +25,7 @@ export class AuthService {
       const salt = await genSalt(10);
       const newUser = new this.userModel({
         userEmail: dto.email,
+        username: dto.username,
         passwordHash: await hash(dto.password, salt),
       });
       return newUser.save();
@@ -33,15 +34,19 @@ export class AuthService {
     }
   }
 
-  async findUser(userEmail: string) {
+  async findUserByEmail(userEmail: string) {
     return this.userModel.findOne({ userEmail }).exec();
+  }
+
+  async findUserByUsername(username: string) {
+    return this.userModel.findOne({ username }).exec();
   }
 
   async validateUser(
     userEmail: string,
     password: string,
   ): Promise<Pick<UserModel, 'userEmail'>> {
-    const user = await this.findUser(userEmail);
+    const user = await this.findUserByEmail(userEmail);
     if (!user) {
       throw new UnauthorizedException('User not found');
     }
