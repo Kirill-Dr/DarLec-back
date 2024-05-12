@@ -13,6 +13,15 @@ async function bootstrap() {
     .setDescription(
       'This is Darlec API. That API need for education website "Darlec" with schedule, homework and lectures.',
     )
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        in: 'header',
+      },
+      'JWT',
+    )
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);

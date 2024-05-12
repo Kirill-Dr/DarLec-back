@@ -42,10 +42,7 @@ export class AuthService {
     return this.userModel.findOne({ username }).exec();
   }
 
-  async validateUser(
-    userEmail: string,
-    password: string,
-  ): Promise<Pick<UserModel, 'userEmail'>> {
+  async validateUser(userEmail: string, password: string): Promise<UserModel> {
     const user = await this.findUserByEmail(userEmail);
     if (!user) {
       throw new UnauthorizedException('User not found');
@@ -54,12 +51,16 @@ export class AuthService {
     if (!isCorrectPassword) {
       throw new UnauthorizedException('Wrong login or password');
     }
-    return { userEmail: user.userEmail };
+    return user;
   }
 
-  async login(email: string) {
+  async login(user: UserModel) {
     try {
-      const payload = { email };
+      const payload = {
+        userEmail: user.userEmail,
+        username: user.username,
+        role: user.role,
+      };
       return {
         access_token: await this.jwtService.signAsync(payload),
       };
