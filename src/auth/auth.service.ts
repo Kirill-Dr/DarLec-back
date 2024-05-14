@@ -19,7 +19,7 @@ export class AuthService {
 
   async createUser(dto: RegisterAuthDto) {
     if (dto.password !== dto.confirmPassword) {
-      throw new BadRequestException('Passwords do not match');
+      throw new BadRequestException('Пароли не совпадают');
     }
     const salt = await genSalt(10);
     const newUser = new this.userModel({
@@ -45,7 +45,7 @@ export class AuthService {
     }
     const isCorrectPassword = await compare(password, user.passwordHash);
     if (!isCorrectPassword) {
-      throw new UnauthorizedException('Wrong sign-in or password');
+      throw new UnauthorizedException('Не верный логин или пароль');
     }
     return user;
   }

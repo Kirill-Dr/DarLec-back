@@ -15,7 +15,7 @@ export class HomeworkService {
     try {
       return this.homeworkModel.create(dto);
     } catch (error) {
-      throw new Error('Could not create homework: ' + error);
+      throw new Error('Не удалось создать домашнюю работу: ' + error);
     }
   }
 
@@ -23,7 +23,7 @@ export class HomeworkService {
     try {
       return this.homeworkModel.find().exec();
     } catch (error) {
-      throw new Error('Could not find all homeworks: ' + error);
+      throw new Error('Не удалось найти домашнюю работу: ' + error);
     }
   }
 
@@ -31,7 +31,7 @@ export class HomeworkService {
     try {
       return this.homeworkModel.findByIdAndDelete(homeworkId);
     } catch (error) {
-      throw new Error('Could not delete homework by id: ' + error);
+      throw new Error('Не удалось удалить домашнюю работу по id: ' + error);
     }
   }
 
@@ -44,7 +44,7 @@ export class HomeworkService {
         new: true,
       });
     } catch (error) {
-      throw new Error('Could not update homework by id: ' + error);
+      throw new Error('Не удалось обновить домашнюю работу по id: ' + error);
     }
   }
 }

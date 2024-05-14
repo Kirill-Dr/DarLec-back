@@ -15,7 +15,7 @@ export class LessonService {
     try {
       return this.lessonModel.create(dto);
     } catch (error) {
-      throw new Error('Could not create lesson: ' + error);
+      throw new Error('Не удалось создать урок: ' + error);
     }
   }
 
@@ -23,7 +23,7 @@ export class LessonService {
     try {
       return this.lessonModel.find().exec();
     } catch (error) {
-      throw new Error('Could not find all lessons: ' + error);
+      throw new Error('Не удалось найти уроки: ' + error);
     }
   }
 
@@ -31,7 +31,7 @@ export class LessonService {
     try {
       return this.lessonModel.findByIdAndDelete(lessonId);
     } catch (error) {
-      throw new Error('Could not delete lesson by id: ' + error);
+      throw new Error('Не удалось удалить урок по id: ' + error);
     }
   }
 
@@ -44,7 +44,7 @@ export class LessonService {
         new: true,
       });
     } catch (error) {
-      throw new Error('Could not update lesson by id: ' + error);
+      throw new Error('Не удалось обновить урок по id: ' + error);
     }
   }
 }

@@ -20,11 +20,11 @@ export class AuthController {
   async register(@Body() dto: RegisterAuthDto) {
     const oldEmail = await this.authService.findUserByEmail(dto.email);
     if (oldEmail) {
-      throw new BadRequestException('Email already exists');
+      throw new BadRequestException('Почта уже использована');
     }
     const oldUserName = await this.authService.findUserByUsername(dto.username);
     if (oldUserName) {
-      throw new BadRequestException('Username already exists');
+      throw new BadRequestException('Имя пользователя уже использовано');
     }
     return this.authService.createUser(dto);
   }
