@@ -41,7 +41,7 @@ export class AuthService {
   async validateUser(userEmail: string, password: string): Promise<UserModel> {
     const user = await this.findUserByEmail(userEmail);
     if (!user) {
-      throw new UnauthorizedException('User not found');
+      throw new UnauthorizedException('Пользователь не найден');
     }
     const isCorrectPassword = await compare(password, user.passwordHash);
     if (!isCorrectPassword) {
@@ -56,9 +56,12 @@ export class AuthService {
       username: user.username,
       role: user.role,
     };
-    const accessToken = await this.jwtService.signAsync(payload);
-    const refreshPayload = { userEmail: user.userEmail };
-    const refreshOptions: JwtSignOptions = { expiresIn: '30m' };
+    const accessOptions: JwtSignOptions = { expiresIn: '1h' };
+    const accessToken = await this.jwtService.signAsync(payload, accessOptions);
+    const refreshPayload = {
+      userEmail: user.userEmail,
+    };
+    const refreshOptions: JwtSignOptions = { expiresIn: '3h' };
     const refreshToken = await this.jwtService.signAsync(
       refreshPayload,
       refreshOptions,
